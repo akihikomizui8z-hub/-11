@@ -1,0 +1,476 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  font-size:16px;
+  background: #f7f7fa;
+  color: #2b2f36;
+  line-height: 1.9;
+}
+
+.container {
+  width: min(1024px, 92%);
+  margin: 0 auto;
+  padding: 24px 0 120px;
+}
+
+.intro {
+  padding: 48px 0 80px;
+  color: #6b7280;
+}
+
+.interview {
+  opacity: 0;
+  transform: translateY(24px);
+  background: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 12px;
+  padding: 20px 20px;
+  margin: 48px 0;
+}
+
+.speaker {
+  font-weight: 700;
+  color: #4f6d8a;
+  margin: 0 0 4px;
+}
+
+.line {
+  margin: 0 0 8px;
+}
+
+.site-footer {
+  margin-top: 120px;
+  color: #6b7280;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interview {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ====== Book Menu ====== */
+.book-wrap {
+  height: 200vh;
+  padding: 8px 0;   /* 24px → 8px */
+}
+
+
+.book {
+  position: relative;
+
+  /* ここがポイント：縦横比を固定 */
+  aspect-ratio: 3 / 4;          /* ←画像の比率に合わせて調整（後述） */
+
+  /* 画面いっぱいに寄せる：高さ基準で大きくする */
+  height: min(86vh, 760px);     /* ← “画面いっぱい感”の主役 */
+  width: auto;
+
+  margin: 0 auto;
+  perspective: 1400px;
+  display: grid;
+  place-items: center;  /* ← 真ん中寄せ */
+
+}
+
+
+/* 開いた見開き */
+.spread {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  opacity: 0;              /* ← 最初は見せない */
+  visibility: hidden;
+  pointer-events: none;    /* ← 最初はクリックも無効 */
+  
+}
+/* 見開きだけ横幅を広げる */
+.spread {
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 96vw);   /* ← ここで見開きの横幅を指定 */
+  height: 100%;               /* bookの高さに合わせる */
+}
+
+/* 2ページの比率を調整（必要なら） */
+.spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;                  /* 真ん中の溝も広く */
+}
+
+
+.page {
+  background-image: url("./hawai1.png");
+  background-size: cover;        /* ページ全面に敷く */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background: transparent;
+  box-shadow: none; /* 必要なら残してもOK */
+
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+.spread {
+  background-image: url("./hawai1.png"); /* ← 2ページ分の画像 */
+  background-size: cover;               /* 画面いっぱいに */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 16px;   /* ページの角丸を見開き全体に */
+  overflow: hidden;      /* 角丸からはみ出さない */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08); /* 影も見開きに */
+}
+.spread {
+  height: 100%;
+  min-height: 720px; /* ← ここを足す */
+}
+
+.spread::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: rgba(0,0,0,0.08);
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+
+
+
+.page h2:not(.chapter-title){
+  margin: 0 0 10px;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+
+.menu-item {
+  display: block;
+  padding: 10px 0;
+  color: #2b2f36;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.menu-item:hover {
+  opacity: 0.75;
+}
+
+/* 表紙 */
+.cover {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  z-index: 5;
+
+  background-image: url("./hyosi.png");
+  background-size: cover;        /* 枠いっぱいに表示 */
+  background-position: center;   /* 中央トリミング */
+  background-repeat: no-repeat;
+
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari対策 */
+}
+
+
+.cover-inner {
+  background: rgba(0,0,0,0.25); /* うっすら暗く */
+}
+
+.cover-title {
+  color: #fff;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+
+
+
+/* できれば本文（インタビュー）に飛ぶ時に気持ち良く */
+html {
+  scroll-behavior: smooth;
+}
+
+.chapter-title {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.chapter-text {
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.8;
+  color: #2b2f36;
+  margin-bottom: 24px;
+}
+
+/* ===== 章の見た目（最優先で勝たせる） ===== */
+.page .chapter-title{
+  font-family: "Noto Serif JP","Hiragino Mincho ProN",serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 14px;
+}
+
+.page .chapter-text{
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.9;
+  margin: 0 0 28px;
+}
+
+.fixed-logo {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+
+  width: 140px;        /* 好きなサイズに調整 */
+  height: auto;
+
+  z-index: -1;          /* ← 最背面 */
+  pointer-events: none; /* ← クリック完全無効 */
+  opacity: 0.3;        /* ← 背景感を出したいなら（任意） */
+
+  background: rgba(255,255,255,1);
+  backdrop-filter: blur(6px);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* ===== Hero Intro ===== */
+.hero{
+  min-height: 80vh;
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: 40px 0 80px;
+}
+
+.hero-kicker{
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0;
+  font-size: 12px;
+}
+
+.hero-title{
+  font-family: "Noto Serif JP","Hiragino Mincho ProN",serif;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: .06em;
+}
+.hero-title2{
+  font-family: "Noto Serif JP","Hiragino Mincho ProN",serif;
+  font-size: clamp(40px, 6vw, 52px);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: .06em;
+}
+
+.hero-lead{
+  max-width: 62ch;
+  margin: 0;
+  font-size: 16px;
+  color: #374151;
+  opacity: .95;
+}
+
+.hero-cta{
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.7);
+  color: #111827;
+  text-decoration: none;
+}
+.hero-cta:hover{ opacity: .85; }
+
+.hero{ position: relative; overflow: hidden; }
+.hero-gif{
+  position: absolute;
+  right: -40px;
+  top: 30%;
+  transform: translateY(-50%);
+  width: min(360px, 40vw);
+  opacity: .9;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.15));
+}
+@media (max-width: 768px){
+  .hero-gif{ display:none; } /* スマホは邪魔になりやすいので消す */
+}
+
+.hero{
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-bottom{
+  position: absolute;
+  right: -20px;        /* GIFと揃えたいなら同じ基準 */
+  bottom: -20px;      /* 少しはみ出させるとデザイン感UP */
+  width: min(280px, 32vw);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.hero-image-bottom1{
+  position: absolute;
+  right: 60px;        /* GIFと揃えたいなら同じ基準 */
+  bottom: 10px;      /* 少しはみ出させるとデザイン感UP */
+  width: min(80px, 32vw);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.read-btn{
+  display: inline-flex;      /* ← ここがポイント */
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;        /* ← 横を詰める */
+  border-radius: 999px;
+
+  border: 1px solid #d1d5db;
+  text-decoration: none;
+  color: #2b2f36;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+
+  width: 140px;      /* ← 好きな長さに調整 */
+  padding: 10px 0;   /* ← 横paddingを殺すのがコツ */
+  text-align: center;
+}
+
+/* ===== LINE風チャット ===== */
+.msg{
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.chat{
+  width: min(900px, 92%);
+  margin: 0 auto;
+  padding: 28px 0 80px;
+}
+.chat {
+  max-width: 720px;   /* ← ここが効く */
+  margin: 0 auto;     /* 画面中央に寄せる */
+  padding: 0 16px;
+}
+.chat {
+  max-width: 720px;   /* 好きな幅でOK */
+  margin: 40px auto;  /* 画面中央に */
+  padding: 0 16px;
+}
+
+
+
+
+.msg{
+  display: flex;
+  flex-direction: column;
+  max-width: 72%;
+  margin: 14px 0;
+}
+
+.msg.left{ align-items: flex-start; }
+.msg.right{
+  align-items: flex-end;
+  margin-left: auto;
+}
+.bubble {
+  max-width: 65%;
+}
+
+
+
+.msg .name{
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0 0 6px 8px;
+}
+
+.bubble{
+  position: relative;
+  padding: 12px 14px;
+  border-radius: 18px;
+  line-height: 1.75;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+  white-space: pre-wrap; /* 改行を維持 */
+}
+
+/* 左（質問者） */
+.msg.left .bubble{
+  background: #ffffff;
+  color: #111827;
+  border-top-left-radius: 6px;
+}
+
+/* 右（相手） */
+.msg.right .bubble{
+  background: #2ecc71; /* LINEっぽい緑 */
+  color: #0b1b12;
+  border-top-right-radius: 6px;
+}
+
+/* “しっぽ” */
+.msg.left .bubble::after{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top: 14px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.msg.right .bubble::after{
+  content:"";
+  position:absolute;
+  right:-6px;
+  top: 14px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: rotate(45deg);
+  border-right: 1px solid rgba(0,0,0,0.06);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.chapter-head{
+  margin-top: 300px;   /* ← ここで間を空ける */
+  margin-bottom: 24px;
+}
