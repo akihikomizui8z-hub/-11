@@ -325,6 +325,21 @@ html {
   pointer-events: none;
   filter: drop-shadow(0 18px 40px rgba(0,0,0,.15));
 }
+
+.hero-gif1{
+  position: absolute;
+
+  right: 410px;   /* ← 右に出す量（数値で調整） */
+  bottom: -30px;   /* ← 少し下にずらすと自然 */
+
+  width: 140px;    /* サイズはここで */
+  opacity: .9;
+
+  pointer-events: none;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.2));
+}
+
+
 @media (max-width: 768px){
   .hero-gif{ display:none; } /* スマホは邪魔になりやすいので消す */
 }
@@ -344,8 +359,8 @@ html {
 }
 .hero-image-bottom1{
   position: absolute;
-  right: 60px;        /* GIFと揃えたいなら同じ基準 */
-  bottom: 10px;      /* 少しはみ出させるとデザイン感UP */
+  right:440px;        /* GIFと揃えたいなら同じ基準 */
+  bottom: 30px;      /* 少しはみ出させるとデザイン感UP */
   width: min(80px, 32vw);
   opacity: 0.9;
   pointer-events: none;
