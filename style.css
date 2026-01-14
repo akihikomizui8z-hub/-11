@@ -329,7 +329,7 @@ html {
 .hero-gif1{
   position: absolute;
 
-  right: 410px;   /* ← 右に出す量（数値で調整） */
+  right: 470px;   /* ← 右に出す量（数値で調整） */
   bottom: -30px;   /* ← 少し下にずらすと自然 */
 
   width: 140px;    /* サイズはここで */
@@ -359,8 +359,8 @@ html {
 }
 .hero-image-bottom1{
   position: absolute;
-  right:440px;        /* GIFと揃えたいなら同じ基準 */
-  bottom: 30px;      /* 少しはみ出させるとデザイン感UP */
+  right:500px;        /* GIFと揃えたいなら同じ基準 */
+  bottom: 0px;      /* 少しはみ出させるとデザイン感UP */
   width: min(80px, 32vw);
   opacity: 0.9;
   pointer-events: none;
@@ -489,3 +489,47 @@ html {
   margin-top: 300px;   /* ← ここで間を空ける */
   margin-bottom: 24px;
 }
+
+.bg-image{
+  position: fixed;
+  inset: 0;
+  background-image: url("./hawai2.jpg"); /* ← 出したい背景 */
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0;                 /* ← 最初は非表示 */
+  pointer-events: none;
+  z-index: 0;                /* ← 背景なので最背面 */
+  transition: opacity 0.6s ease;
+  
+  filter: blur(15px) brightness(1.4) saturate(.95);
+  transform: scale(0.8); /* ぼかしの端の白フチ対策 */
+}
+
+
+main.container{
+  position: relative;
+  z-index: 1;
+}
+
+.bg-gif{
+  position: fixed;
+  right: 380px;     /* 右にずらす */
+  bottom: 10px;    /* 下にずらす */
+
+  width: 420px;
+  height: 420px;
+
+  background-image: url("./kani.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+.bg-gif { opacity: 0; }
+.bg-gif.is-on { opacity: 1; }

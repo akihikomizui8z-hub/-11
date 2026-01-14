@@ -86,6 +86,8 @@ window.addEventListener("load", () => {
   setupBookMenu();
   setupScrollEffects();
   setupChatReveal();     // ←追加
+  setupBackgroundFade();   // ← 追加
+  setupBackgroundRange();
   ScrollTrigger.refresh();
 
 
@@ -93,6 +95,10 @@ window.addEventListener("load", () => {
   // フォント読み込み等でズレることがあるので二段refreshが安定
   ScrollTrigger.refresh();
   setTimeout(() => ScrollTrigger.refresh(), 100);
+
+  
+  
+
 });
 
 function setupChatReveal() {
@@ -116,3 +122,91 @@ function setupChatReveal() {
     });
   });
 }
+
+function setupBackgroundRange(){
+  gsap.set(".bg-image", { opacity: 0 });
+
+  // 出す
+  ScrollTrigger.create({
+    trigger: ".bg-start",
+    start: "top 70%",
+    onEnter: () => gsap.to(".bg-image", { opacity: 1, duration: 0.8, ease: "power2.out" }),
+    onEnterBack: () => gsap.to(".bg-image", { opacity: 1, duration: 0.6, ease: "power2.out" }),
+  });
+
+  // 終わらせる（消す）
+  ScrollTrigger.create({
+    trigger: ".bg-end",
+    start: "top 70%",
+    onEnter: () => gsap.to(".bg-image", { opacity: 0, duration: 1.2, ease: "power1.out" }),
+    onEnterBack: () => gsap.to(".bg-image", { opacity: 1, duration: 0.6, ease: "power2.out" }), // 戻ったらまた出す
+  });
+}
+
+window.addEventListener("load", () => {
+  gsap.set(".bg-image", { opacity: 0 });
+
+  // 背景を出す
+  ScrollTrigger.create({
+    trigger: ".bg-start",
+    start: "top 75%",
+    onEnter: () =>
+      gsap.to(".bg-image", {
+        opacity: 1,
+        duration: 1.0,
+        ease: "power2.out",
+      }),
+    onEnterBack: () =>
+      gsap.to(".bg-image", {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+      }),
+  });
+
+  // 背景を終わらせる
+  ScrollTrigger.create({
+    trigger: ".bg-end",
+    start: "top 75%",
+    onEnter: () =>
+      gsap.to(".bg-image", {
+        opacity: 0,
+        duration: 1.4,   // ← 余韻を残して消える
+        ease: "power1.out",
+      }),
+    onEnterBack: () =>
+      gsap.to(".bg-image", {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+      }),
+  });
+
+  ScrollTrigger.refresh();
+});
+
+window.addEventListener("load", () => {
+  const bgGif = document.querySelector(".bg-gif");
+  const gifStart = document.querySelector(".gif-start");
+  const gifEnd = document.querySelector(".gif-end");
+
+  if (!bgGif || !gifStart || !gifEnd) return;
+
+  gsap.set(bgGif, { autoAlpha: 0 });
+
+  ScrollTrigger.create({
+    trigger: gifStart,
+    start: "top 75%",
+    endTrigger: gifEnd,
+    end: "top 75%",
+    onToggle: (self) => {
+      gsap.to(bgGif, {
+        autoAlpha: self.isActive ? 1 : 0,
+        duration: self.isActive ? 0.7 : 0.9,
+        ease: "power2.out",
+      });
+    },
+    // markers: true, // 調整したい時だけON
+  });
+});
+
