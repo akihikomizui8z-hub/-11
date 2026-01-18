@@ -514,8 +514,8 @@ main.container{
 
 .bg-gif{
   position: fixed;
-  right: 380px;     /* 右にずらす */
-  bottom: 10px;    /* 下にずらす */
+  right: 300px;     /* 右にずらす */
+  bottom: -40px;    /* 下にずらす */
 
   width: 420px;
   height: 420px;
@@ -533,3 +533,296 @@ main.container{
 
 .bg-gif { opacity: 0; }
 .bg-gif.is-on { opacity: 1; }
+.bg-image, .bg-gif { z-index: 1; }  /* or 0 */
+
+
+/* スクロール量を作る（ここを増やすと演出が長くなる） */
+.door-wrap{
+  height: 220vh;
+  padding: 0;
+}
+
+/* ピン留めされる舞台 */
+.door-scene{
+  position: relative;
+  width: min(1100px, 92vw);
+  height: min(680px, 82vh);
+  margin: 0 auto;
+
+  perspective: 1600px;
+  transform-style: preserve-3d;
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow: 0 18px 50px rgba(0,0,0,0.15);
+}
+
+/* 店内（奥の背景） */
+.interior{
+  position: absolute;
+  inset: 0;
+  background-image: url("./.png"); /* ←店内画像 */
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0; /* 最初は見せない */
+  transform: scale(1.03); /* 少し奥行き感 */
+}
+
+/* 扉（手前） */
+.door{
+  position: absolute;
+  inset: 0;
+  background-image: url("./tobira2.png"); /* ←扉画像 */
+  background-size: cover;
+  background-position: center;
+
+  transform-origin: left center; /* 左が蝶番 */
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 薄い暗幕（任意） */
+.veil{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.interior{ background-image: url("tennai.png"); }
+.door{ background-image: url("tobira2.png"); }
+
+.door-scene{
+  position: relative;
+  width: 20vw;
+  height: 80vh;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/* ===== Door transition（ここだけは1回だけ定義） ===== */
+.door-wrap{
+  height: 220vh;          /* 演出の長さ */
+}
+
+/* ピンされる“舞台”は画面いっぱい */
+.door-scene{
+  position: relative;
+  width: 100%;
+  height: 10vh;
+  margin: 0;
+
+  perspective: 1600px;
+  transform-style: preserve-3d;
+
+  overflow: hidden;
+  border-radius: 0;       /* 全画面にしたいので角丸なし */
+  box-shadow: none;
+}
+
+/* 店内（背景）＝最初から画面全体に敷く */
+.interior{
+  position: absolute;
+  inset: 0;
+  background-image: url("./tennai.png");   /* ←これだけにする */
+  background-size: cover;
+  background-position: center top;
+
+  opacity: 0;             /* 最初は薄く（後で出す） */
+  transform: scale(1.12); /* “飛び込む”用に最初は少し拡大 */
+}
+
+/* 扉＝細長い板（左側に固定） */
+.door{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: min(320px, 26vw);           /* 細長い扉 */
+  background-image: url("./tobira.png");
+  background-size: cover;
+  background-position: center;
+
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  z-index: 3;
+}
+
+/* 暗幕（雰囲気） */
+.veil{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  opacity: 0.0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* “入店後”は以降ずっと店内背景にしたい場合 */
+body.in-interior .bg-image{
+  opacity: 1;
+  background-image: url("./tennai.png");
+  filter: none;
+  transform: none;
+}
+
+/* 全画面の店内背景（最初は透明） */
+.interior-bg{
+  position: fixed;
+  inset: 0;
+  background-image: url("./tennai.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;              /* 背景レイヤー */
+  transition: opacity .4s ease;
+}
+
+/* mainは背景より手前に */
+main.container{ position: relative; z-index: 2; }
+
+/* 演出区間：スクロール長さ */
+.door-wrap{
+  height: 240vh;
+  margin: 0;
+}
+
+/* ピン留めされる舞台（中央） */
+.door-scene{
+  position: relative;
+  width: min(300px, 70vw);     /* 舞台自体は細め */
+  height: min(850px, 100vh);
+  margin: 0 auto;
+  border-radius: 22px;
+  overflow: hidden;
+
+  perspective: 1400px;
+  transform-style: preserve-3d;
+
+  box-shadow: 0 18px 50px rgba(0,0,0,.15);
+  background: transparent;
+}
+
+/* 店内（舞台の奥） */
+.door-scene .interior{
+  position: absolute;
+  inset: 0;
+  background-image: url("./tennai.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 1;                /* 舞台内では最初から存在してOK */
+  transform: scale(1.02);
+}
+
+/* 扉（舞台の手前）：細長くしたいので幅を指定 */
+.door-scene .door{
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 100%;                /* ← 扉の細さ（ここ調整） */
+  background-image: url("./tobira.png");
+  background-size: cover;
+  background-position: center;
+
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* 右側の“隙間”の背景（舞台内で見える店内） */
+.door-scene::after{
+  content:"";
+  position:absolute;
+  top:0; right:0; bottom:0;
+  width: 20%;
+  background: rgba(0,0,0,0.0);
+  pointer-events:none;
+}
+
+/* 雰囲気用の薄いフィルム（任意） */
+.door-scene .veil{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  pointer-events: none;
+  opacity: .25;
+}
+
+/* 店内背景（最初は透明） */
+.bg-interior{
+  position: fixed;
+  inset: 0;
+  background-image: url("./tennai.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;                 /* 背景レイヤー */
+  transition: opacity .8s ease;
+}
+
+/* 店内に入ったら店内背景を表示 */
+body.inside .bg-interior{
+  opacity: 1;
+}
+
+/* 既存の背景（海）を消したいなら */
+body.inside .bg-image{
+  opacity: 0;
+}
+
+.door-scene { opacity: 0; }
+
+.door-trigger{
+  height: 1px;
+}
+.door-scene{
+  opacity: 0;
+  transform: translateY(180px);
+  will-change: transform, opacity;
+}
+
+.interior-bg{
+  position: fixed;
+  inset: 0;
+  background-image: url("./tennai.png"); /* 店内画像 */
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 文字やチャットが背景の上に来るように */
+main.container{
+  position: relative;
+  z-index: 2;
+}
+
+/* 最初は左の画面外に隠す */
+.interior-harunobu{
+  position: fixed;
+  left: -320px;          /* 画面外 */
+  bottom: 20px;
+  width: 240px;
+  opacity: 0;
+  transform: translateX(0);
+  transition: left .8s ease, opacity .6s ease;
+  z-index: 9999;         /* これで上に来る */
+  pointer-events: none;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.25));
+}
+
+/* 店内に入ったら出す */
+body.inside .interior-harunobu{
+  left: 30px;            /* 画面内 */
+  opacity: 1;
+}

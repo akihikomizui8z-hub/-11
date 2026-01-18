@@ -88,6 +88,7 @@ window.addEventListener("load", () => {
   setupChatReveal();     // ←追加
   setupBackgroundFade();   // ← 追加
   setupBackgroundRange();
+  setupDoorScene();
   ScrollTrigger.refresh();
 
 
@@ -145,7 +146,7 @@ function setupBackgroundRange(){
 
 window.addEventListener("load", () => {
   gsap.set(".bg-image", { opacity: 0 });
-
+setupInteriorHarunobu();
   // 背景を出す
   ScrollTrigger.create({
     trigger: ".bg-start",
@@ -209,4 +210,101 @@ window.addEventListener("load", () => {
     // markers: true, // 調整したい時だけON
   });
 });
+
+gsap.registerPlugin(ScrollTrigger);
+
+window.addEventListener("load", () => {
+  setupDoorScene();
+  ScrollTrigger.refresh();
+});
+
+function setupDoorScene(){
+  const wrap = document.querySelector(".door-wrap");
+  const trigger = document.querySelector(".door-trigger");
+  if(!wrap) return;
+
+  const scene    = wrap.querySelector(".door-scene");
+  const door     = wrap.querySelector(".door");
+  const interior = wrap.querySelector(".interior");
+  const veil     = wrap.querySelector(".veil");
+
+  if(!scene || !door || !interior) return;
+
+  // 初期状態（CSSだけに頼らずJSで固定）
+  gsap.set(".interior-bg", { opacity: 0 });
+  gsap.set(".door-scene", { scale: 1, autoAlpha: 1, transformOrigin: "50% 50%" });
+  gsap.set(scene,    { opacity: 0, y: 180 });
+  gsap.set(interior, { opacity: 0, scale: 1.12, transformOrigin: "50% 50%" });
+  gsap.set(veil,     { opacity: 0.25 });
+  gsap.set(door,     { rotateY: 0, transformOrigin: "left center", opacity: 1 });
+
+  // ① 下から出る（scrubじゃなく再生）
+  ScrollTrigger.create({
+    trigger: wrap,
+    start: "top 95%",
+    onEnter: () => {
+      gsap.to(scene, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    },
+
+    // markers: true,
+  });
+
+  // ② その後スクロールで「開く」（pin+scrub）
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: trigger,
+      start: "top 10%",   // ★ここを変えると「開き始める位置」が変わる
+      end: "+=1600",
+      scrub: true,
+      pin: wrap,
+      anticipatePin: 1,
+      // markers: true,
+    }
+  });
+
+  tl.to(interior, { opacity: 1, scale: 1.0, ease: "none" }, 0.05)
+    .to(door,     { rotateY: -115, ease: "none" }, 0.15)  // ★開く
+    .to(veil,     { opacity: 0.0, ease: "none" }, 0.60)
+    .to(door,     { opacity: 0, ease: "none" }, 0.85);
+    // 飛び込み（シーン消える + 背景ON）
+    tl.call(() => document.body.classList.add("inside"), null, 0.80);
+tl.call(() => document.body.classList.remove("inside"), null, 0.05);
+  tl.to(".door-scene",   { scale: 1.25, autoAlpha: 0, ease: "none" }, 0.80)
+    .to(".interior-bg",  { opacity: 1, ease: "none" },              0.80)
+    
+
+    
+
+  // ★これを追加：door側の店内を後で消して残骸を防ぐ
+    .to(".inside",     { opacity: 0, ease: "none" },              0.82);
+
+}
+
+function setupInteriorHarunobu(){
+  const img = document.querySelector(".interior-harunobu");
+  const body = document.body;
+
+  if(!img) return;
+
+  gsap.set(img, { x: 0, y: 0, autoAlpha: 0 }); // 念のため初期化
+
+  ScrollTrigger.create({
+    trigger: ".door-wrap",
+    start: "top top",
+    end: "+=1600",     // 扉演出と同じendに合わせる
+    scrub: true,
+
+    onUpdate: (self) => {
+      if (self.progress > 0.60) body.classList.add("inside");  // ここで出る
+      else body.classList.remove("inside");                    // 戻ったら消す
+    }
+  });
+  
+}
 

@@ -11,6 +11,9 @@
   <body>
     <div class="bg-image"></div>
     <div class="bg-gif"></div>
+    <div class="bg-interior"></div>
+    <div class="interior-bg"></div>
+    <img src="./harunobu.png" alt="" class="interior-harunobu">
     <img src="./tenkilogo.png" alt="人生の転機" class="fixed-logo">
     <main class="container">
     <section class="book-wrap">
@@ -27,25 +30,26 @@
     <!-- 開いた中身（メニュー） -->
     <div class="spread">
       <div class="page page-left">
+        <h2 class="chapter-title">⠀ ⠀</h2>
+        <a class="chapter-text" >⠀ ⠀</a>
 
         <h2 class="chapter-title">初めに</h2>
         <a class="chapter-text" href="#interview-start1">インタビュー前</a>
 
-        <h2 class="chapter-title">第一章</h2>
-        <a class="chapter-text" href="#ch1">コナズ珈琲に入ったきっかけ</a>
-
-        <h2 class="chapter-title">第二章</h2>
-        <a class="chapter-text" href="#ch2">コナズの見え方</a>
       </div>
 
       <div class="page page-right">
+
         <h2 class="chapter-title">⠀ ⠀</h2>
         <a class="chapter-text" >⠀ ⠀</a>
 
-        <h2 class="chapter-title">第三章</h2>
-        <a class="chapter-text" href="#ch3">現在の仕事観</a>
+        <h2 class="chapter-title">第一章</h2>
+        <a class="chapter-text" href="#interview-start101">コナズ珈琲に入ったきっかけ</a>
 
-        <h2 class="chapter-title">第四章</h2>
+        <h2 class="chapter-title">第二章</h2>
+        <a class="chapter-text" href="#interview-start201">人生の転機とは</a>
+
+        <h2 class="chapter-title">第三章</h2>
         <a class="chapter-text" href="#ch4">人生で大切にしてきたこと</a>
       </div>
     </div>
@@ -57,7 +61,7 @@
       <p class="hero-kicker">Interview</p>
       <h1 class="hero-title">人生の転機</h1>
       <p class="hero-lead">
-    今回mizui（質問者）はメディアデザイン演習の課題で、アルバイト先であるハワイアンカフェ「コナズ珈琲」の社員さんに、20代の頃に起きた人生の転機について質問することになった。
+    今回mizui（質問者）は、アルバイト先であるハワイアンカフェ「コナズ珈琲」の社員さんに、20代の頃に起きた人生の転機について質問することになった。普段から明るくふざけている社員さんだが、どのようなことを考えて現在に至るのかインタビューをさせてもらった。
     </p>
     <img class="hero-gif" src="./mahalo.gif" alt="">
     <img class="hero-image-bottom" src="./harunobu.png" alt="">
@@ -220,9 +224,33 @@
       </div>
       <div class="msg right bg-end">
       <div class="name">mizui</div>
-      <div class="bubble">なるほど。。</div>
+      <div class="bubble">なるほど。。。</div>
       </div>
+      <div class="door-trigger"></div>
+      </section>
+      
+
+      
+      <section class="door-wrap">
+      <div class="door-scene">
+      <!-- 店内（奥） -->
+      <div class="interior"></div>
+
+      <!-- 扉（手前） -->
+      <div class="door"></div>
+
+      <!-- 任意：ちょい暗くするフィルム（雰囲気UP） -->
+      <div class="veil"></div>
       </div>
+      </section>
+
+
+
+      <section id="interview-start201"></section>
+      <section class="chapter-head">
+      <p class="hero-kicker">第二章</p>
+      <h1 class="hero-title2">人生の転機とは</h1>
+      </section>
       
       
       
@@ -231,7 +259,6 @@
         
 </div>
       </div>
-</section>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
