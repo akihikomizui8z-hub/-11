@@ -4,262 +4,381 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>harunobu rink desu</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Noto+Serif+JP:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
+
   <body>
+    <!-- 背景レイヤー -->
     <div class="bg-image"></div>
     <div class="bg-gif"></div>
     <div class="bg-interior"></div>
     <div class="interior-bg"></div>
-    <img src="./harunobu.png" alt="" class="interior-harunobu">
-    <img src="./tenkilogo.png" alt="人生の転機" class="fixed-logo">
+
+    <!-- 店内で出るharunobu（左からスライド） -->
+    <img src="./harunobu.png" alt="" class="interior-harunobu" />
+
+    <!-- ロゴ -->
+    <img src="./tenkilogo.png" alt="人生の転機" class="fixed-logo" />
+
+    <!-- =========================
+      第一章：画面固定の会話表示（corner-talk）
+      ※JSが .corner-bubble-left / .corner-bubble-right を探すのでクラス維持
+    ========================== -->
+    <div class="corner-talk" aria-hidden="true">
+      <!-- 左下：harunobu -->
+      <div class="corner-left">
+        <img src="./harunobu.png" alt="" class="corner-harunobu" />
+        <div class="corner-bubble corner-bubble-left"></div>
+      </div>
+
+      <!-- 右下：mizui（画像なし） -->
+      <div class="corner-right">
+        <div class="corner-bubble corner-bubble-right"></div>
+      </div>
+    </div>
+
+    <!-- =========================
+      本文
+    ========================== -->
     <main class="container">
-    <section class="book-wrap">
-    
 
-  <div class="book">
-    <!-- 表紙 -->
-    <div class="cover">
-      <div class="cover-inner">
-       
-      </div>
-    </div>
+      <!-- 表紙（本の演出） -->
+      <section class="book-wrap">
+        <div class="book">
+          <!-- 表紙 -->
+          <div class="cover">
+            <div class="cover-inner"></div>
+          </div>
 
-    <!-- 開いた中身（メニュー） -->
-    <div class="spread">
-      <div class="page page-left">
-        <h2 class="chapter-title">⠀ ⠀</h2>
-        <a class="chapter-text" >⠀ ⠀</a>
+          <!-- 開いた中身（メニュー） -->
+          <div class="spread">
+            <div class="page page-left">
+              <h2 class="chapter-title">⠀ ⠀</h2>
+              <a class="chapter-text">⠀ ⠀</a>
 
-        <h2 class="chapter-title">初めに</h2>
-        <a class="chapter-text" href="#interview-start1">インタビュー前</a>
+              <h2 class="chapter-title">初めに</h2>
+              <a class="chapter-text" href="#interview-start1">インタビュー前</a>
+            </div>
 
-      </div>
+            <div class="page page-right">
+              <h2 class="chapter-title">⠀ ⠀</h2>
+              <a class="chapter-text">⠀ ⠀</a>
 
-      <div class="page page-right">
+              <h2 class="chapter-title">第一章</h2>
+              <a class="chapter-text" href="#interview-start101">コナズ珈琲に入ったきっかけ</a>
 
-        <h2 class="chapter-title">⠀ ⠀</h2>
-        <a class="chapter-text" >⠀ ⠀</a>
+              <h2 class="chapter-title">第二章</h2>
+              <a class="chapter-text" href="#interview-start201">人生の転機とは</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <h2 class="chapter-title">第一章</h2>
-        <a class="chapter-text" href="#interview-start101">コナズ珈琲に入ったきっかけ</a>
+      <!-- 初めに -->
+      <section class="intro hero" id="interview-start1">
+        <p class="hero-kicker">Interview</p>
+        <h1 class="hero-title">人生の転機</h1>
+        <p class="hero-lead">
+          今回mizui（質問者）は、アルバイト先であるハワイアンカフェ「コナズ珈琲」の社員さんに、
+          20代の頃に起きた人生の転機について質問することになった。普段から明るくふざけている社員さんだが、
+          どのようなことを考えて現在に至るのかインタビューをさせてもらった。
+        </p>
 
-        <h2 class="chapter-title">第二章</h2>
-        <a class="chapter-text" href="#interview-start201">人生の転機とは</a>
+        <img class="hero-gif" src="./mahalo.gif" alt="" />
+        <img class="hero-image-bottom" src="./harunobu.png" alt="" />
 
-        <h2 class="chapter-title">第三章</h2>
-        <a class="chapter-text" href="#ch4">人生で大切にしてきたこと</a>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- 初めに -->
-      <section class="intro hero">
-        <section id="interview-start1"></section>
-      <p class="hero-kicker">Interview</p>
-      <h1 class="hero-title">人生の転機</h1>
-      <p class="hero-lead">
-    今回mizui（質問者）は、アルバイト先であるハワイアンカフェ「コナズ珈琲」の社員さんに、20代の頃に起きた人生の転機について質問することになった。普段から明るくふざけている社員さんだが、どのようなことを考えて現在に至るのかインタビューをさせてもらった。
-    </p>
-    <img class="hero-gif" src="./mahalo.gif" alt="">
-    <img class="hero-image-bottom" src="./harunobu.png" alt="">
+        <a href="#interview-start101" class="read-btn">読む</a>
+      </section>
 
-
-    <a href="#interview-start101" class="read-btn">読む</a>
-
-</section>
-
-      <!-- 01 -->
-      
-      <section id="interview-start101"></section>
-      <section class="chapter-head">
-      <p class="hero-kicker">第一章</p>
-      <h1 class="hero-title2">コナズ珈琲に入ったきっかけ</h1>
+      <!-- 第一章 -->
+      <section id="interview-start101" class="chapter-head">
+        <p class="hero-kicker">第一章</p>
+        <h1 class="hero-title2">コナズ珈琲に入ったきっかけ</h1>
       </section>
 
       <section class="chat">
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">じゃあ本日はよろしくお願いします</div>
-      </div>
-      
-      <div class="msg left">
-      <div class="name"></div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">はい、よろしくお願いします。</div>
-      
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">えー、じゃあまず、自己紹介の方お願いします。</div>
-      </div>
-      <div class="msg left">
-      <div class="name"></div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">自己紹介。えー、一色春信（いっしき はるのぶ）です。31歳です。えー、独身です。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">あと体重とかも。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <div class="bubble">体重は、体重は0.1トンですね</div>
-        <img class="hero-gif1" src="./harunobu-1ton.gif" alt="">
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">0.1トン。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">はい。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">えっと、じゃあ、本題に入りますね。今回僕、「人生の転機」っていうテーマでインタビューしてるんですけど、
-</div>
-      </div>
-      <div class="msg right bg-start">
-      <div class="name">mizui</div>
-      <div class="bubble">一色さんがなんで今、このコナズ珈琲で働いてんのかなっていうのを、お聞かせください。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">なんでコナズ珈琲に入ったきっかけってことかな？</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">そうっすね。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">前の、前職が飲食初めてやって、飲食いいなと思って。前の会社3～4年おったんやけど。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">はい。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">で、同業他社なんよ、実は。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">同業他社？</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">すき家と吉野家みたいな。ローソンとファミマみたいな。同業他社やったんやけど。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">はいはい。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">そん時に、同業他社としてライバル視察として、コナズ珈琲よう来よって。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">へえー。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">その中で、もうコナズ珈琲のものをパクったりとかもしよったし。とりあえずコナズ珈琲のこと取り入れたりとかもしよったから、マジで。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">マジっすか？</div>
-      </div>
-      <div class="msg left gif-start">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">原宿とか、お台場とかその辺にあったあの……、フランチャイズで働きよったんよ。</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">フランチャイズ。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">だからその中のフランチャイズの中で、言うたらコナズ珈琲の「あ、いいな」と思ったこと取り入れたこといっぱいあるし。
-</div>
-      </div>
-      <div class="msg right">
-      <div class="name">mizui</div>
-      <div class="bubble">なるほど。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">そうそう。で、そん時に、次第に行きよったら、もうコナズ珈琲めっちゃいいお店やな…… </div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <div class="bubble">こう色々調べよったら、会社とか調べるのめっちゃ好きやから。</div>
-      </div>
-      <div class="msg left">
-      <div class="name">一色さん</div>
-      <div class="bubble">「ああまあ、いいな」と思って。前の会社辞めたタイミングで、もう辞めるんやったらもう一回コナズ珈琲で入りたいなと思って。</div>
-      </div>
-      <div class="msg right ">
-      <div class="name">mizui</div>
-      <div class="bubble">あ、そうなんすね。</div>
-      </div>
-      <div class="msg left gif-end">
-      <div class="name">一色さん</div>
-      <img class="hero-image-bottom1" src="./harunobu.png" alt="">
-      <div class="bubble">そうそう。前の会社の経験を生かして、キャリアアップできるかなっていうところで、コナズ珈琲に入った。リアルな話したら。</div>
-      </div>
-      <div class="msg right bg-end">
-      <div class="name">mizui</div>
-      <div class="bubble">なるほど。。。</div>
-      </div>
-      <div class="door-trigger"></div>
-      </section>
-      
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">じゃあ本日はよろしくお願いします</div>
+        </div>
 
-      
+        <div class="msg left">
+          <div class="name"></div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">はい、よろしくお願いします。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">えー、じゃあまず、自己紹介の方お願いします。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name"></div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">自己紹介。えー、一色春信（いっしき はるのぶ）です。31歳です。えー、独身です。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">あと体重とかも。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <div class="bubble">体重は、体重は0.1トンですね</div>
+          <img class="hero-gif1" src="./harunobu-1ton.gif" alt="" />
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">0.1トン。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">はい。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">
+            えっと、じゃあ、本題に入りますね。今回僕、「人生の転機」っていうテーマでインタビューしてるんですけど、
+          </div>
+        </div>
+
+        <div class="msg right bg-start">
+          <div class="name">mizui</div>
+          <div class="bubble">一色さんがなんで今、このコナズ珈琲で働いてんのかなっていうのを、お聞かせください。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">なんでコナズ珈琲に入ったきっかけってことかな？</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">そうっすね。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">前の、前職が飲食初めてやって、飲食いいなと思って。前の会社3～4年おったんやけど。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">はい。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">で、同業他社なんよ、実は。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">同業他社？</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">すき家と吉野家みたいな。ローソンとファミマみたいな。同業他社やったんやけど。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">はいはい。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">そん時に、同業他社としてライバル視察として、コナズ珈琲よう来よって。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">へえー。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">その中で、もうコナズ珈琲のものをパクったりとかもしよったし。とりあえずコナズ珈琲のこと取り入れたりとかもしよったから、マジで。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">マジっすか？</div>
+        </div>
+
+        <div class="msg left gif-start">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">原宿とか、お台場とかその辺にあったあの……、フランチャイズで働きよったんよ。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">フランチャイズ。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">だからその中のフランチャイズの中で、言うたらコナズ珈琲の「あ、いいな」と思ったこと取り入れたこといっぱいあるし。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">なるほど。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">そうそう。で、そん時に、次第に行きよったら、もうコナズ珈琲めっちゃいいお店やな……</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <div class="bubble">こう色々調べよったら、会社とか調べるのめっちゃ好きやから。</div>
+        </div>
+
+        <div class="msg left">
+          <div class="name">一色さん</div>
+          <div class="bubble">「ああまあ、いいな」と思って。前の会社辞めたタイミングで、もう辞めるんやったらもう一回コナズ珈琲で入りたいなと思って。</div>
+        </div>
+
+        <div class="msg right">
+          <div class="name">mizui</div>
+          <div class="bubble">あ、そうなんすね。</div>
+        </div>
+
+        <div class="msg left gif-end">
+          <div class="name">一色さん</div>
+          <img class="hero-image-bottom1" src="./harunobu.png" alt="" />
+          <div class="bubble">そうそう。前の会社の経験を生かして、キャリアアップできるかなっていうところで、コナズ珈琲に入った。リアルな話したら。</div>
+        </div>
+
+        <div class="msg right bg-end">
+          <div class="name">mizui</div>
+          <div class="bubble">なるほど。。。</div>
+        </div>
+
+        <div class="door-trigger"></div>
+      </section>
+
+      <!-- 扉演出 -->
       <section class="door-wrap">
-      <div class="door-scene">
-      <!-- 店内（奥） -->
-      <div class="interior"></div>
-
-      <!-- 扉（手前） -->
-      <div class="door"></div>
-
-      <!-- 任意：ちょい暗くするフィルム（雰囲気UP） -->
-      <div class="veil"></div>
-      </div>
+        <div class="door-scene">
+          <div class="interior"></div>
+          <div class="door"></div>
+          <div class="veil"></div>
+        </div>
       </section>
 
-
-
+      <!-- 第二章 開始マーカー -->
       <section id="interview-start201"></section>
-      <section class="chapter-head">
-      <p class="hero-kicker">第二章</p>
-      <h1 class="hero-title2">人生の転機とは</h1>
-      </section>
-      
-      
-      
+      <div class="corner-talk-start"></div>
 
-
-        
-</div>
+      <!-- 第二章：固定UI（2個） -->
+      <div class="corner-ui" aria-hidden="true">
+        <div class="corner-bubble corner-bubble--left" id="bubbleLeft"></div>
+        <div class="corner-bubble corner-bubble--right" id="bubbleRight"></div>
       </div>
 
+      <section class="chapter-head">
+        <p class="hero-kicker">第二章</p>
+        <h1 class="hero-title2">人生の転機とは</h1>
+      </section>
+
+      <!-- 第二章：トリガー用（見えないけど存在させる） -->
+      <section class="chat chat-chapter2">
+        <div class="c2-msg" data-side="right">人生の転機とはどんな時でした？</div>
+        <div class="c2-msg" data-side="left">人生の転機、か。人生で言ったらむずいな。やっぱね、人生30年生きてきたらね、考え方変わるよ。
+</div>
+        <div class="c2-msg" data-side="right">あ、変わることあるのか。</div>
+        <div class="c2-msg" data-side="left">考え方変わるよ。</div>
+        <div class="c2-msg" data-side="right">じゃあ、今は、、</div>
+        <div class="c2-msg" data-side="left">今は、って思うことはなんやろな……。なんか、元々多分俺ってめちゃくちゃ主人公になりたいタイプなんよ。</div>
+        <div class="c2-msg" data-side="right">はい。まあけど、全然なれてはいると思いますけど。
+</div>
+        <div class="c2-msg" data-side="left">なんか目立ちたがり屋やし。まあそれは今でもそうやと思うけど。</div>
+        <div class="c2-msg" data-side="right">はいはい。</div>
+        <div class="c2-msg" data-side="left">目立ちたがり屋やけど。でもなんかね、何年ぐらい前かな、ここ2～3年ぐらいは、まあ前の会社になってこう役職が上がってからぐらいかな、
+</div>  <div class="c2-msg" data-side="left">自分が目立ちたいっていうことよりも、なんか誰かがこう主人公になってくれる方が、俺は、なんか……。</div>
+        <div class="c2-msg" data-side="right">へえー。</div>
+        <div class="c2-msg" data-side="left">そう。例えば誰か、だからここのお店で言ったら役割で言ったらさ、店長ソラさんじゃん。
+</div>
+        <div class="c2-msg" data-side="right">はい。</div>
+        <div class="c2-msg" data-side="left">で、俺、年齢的にも一番上なわけじゃん。</div>
+        <div class="c2-msg" data-side="right">そうですね。</div>
+        <div class="c2-msg" data-side="left">何でもかんでも俺が決めることも可能なのよ。でも、そこが大切なんじゃなくて、例えば今で言ったらさ、新卒のミカちゃんとかさ、研修のナカガワさんとかさ。</div>
+        <div class="c2-msg" data-side="right">はい。</div>
+        <div class="c2-msg" data-side="left">で、もっと言ったらPSさんとかがさ、誰かがこう主人公になってくれて、まあ主人公っていうのも、それぞれ人生全員主人公だから。</div>  
+        <div class="c2-msg" data-side="left">その中で、誰かがこう輝いてくれる方が嬉しいなって俺は思うね。自分がこう……。</div>
+        <div class="c2-msg" data-side="right">育てる側、みたいな？</div>
+        <div class="c2-msg" data-side="left">そうそう。自分が主人公になりたいって思うより。
+</div>
+        <div class="c2-msg" data-side="right">そんな思ってるんですか？</div>
+        <div class="c2-msg" data-side="left">だから俺、ずっと言ってる、組織図とかも絶対そうじゃん。</div>
+        <div class="c2-msg" data-side="right">あ、なるほど。確かに前まではなかったんですけど。</div>
+        <div class="c2-msg" data-side="left">そうそう。だから俺ら。俺が「俺が俺が」って言うんじゃなくて、誰かがやって、そこをきっちり評価してあげて、そこをしっかり称えて、そこを立たせてあげるっていう気持ちの方が大きいかな。
+</div>
+        <div class="c2-msg" data-side="right">意外です。</div>
+        <div class="c2-msg" data-side="left">昔は「俺が俺が」って思うタイプやったけど。今はね、本当あんま思わんね、それが。</div>
+        <div class="c2-msg" data-side="right">ギャグとか言うけどね。</div>
+        <div class="c2-msg" data-side="left">いやまあ、やっぱそこがあるんで、今は全然。
+目立ちたがり屋は目立ちたがり屋よ。</div>
+        <div class="c2-msg" data-side="right">まあ、いい目立ち方をしたいってことですか？</div>
+        <div class="c2-msg" data-side="left">なんか……あんま周りの成長とか何も気にしてなかったよ、昔は。野球部だったらさ、俺がレギュラーになることが目標なんよ。わかる？</div>
+        <div class="c2-msg" data-side="right">はい。</div>
+        <div class="c2-msg" data-side="left">野球で例えたら、自分がレギュラーになって、自分が4番打って、自分がヒット打って……。
+</div>
+        <div class="c2-msg" data-side="right">まあまあ。</div>
+        <div class="c2-msg" data-side="left">勝てばいい、って思うタイプやったんよ。 けど、今はどっちかって言ったら、こいつが、こいつと一緒に、とか。</div>
+        <div class="c2-msg" data-side="right">へえー。</div>
+        <div class="c2-msg" data-side="left">そうそう。自分が、自分が犠牲になってもいいから。自分が送りバントしてでもいいから、</div>
+        <div class="c2-msg" data-side="left">昔やったら「は？ バントかよ」みたいな。「ありえねえ」みたいな思ってたけど。</div>
+        <div class="c2-msg" data-side="right">なりますよね。</div>
+        <div class="c2-msg" data-side="left">けどそっちじゃなくて、なんか、まあ自分はバントしてでもいいし、進塁打打ってでもいいから、チームを勝たす方がいいよね、っていうタイプやね、今は。そこは変わったかな。
+</div>
+        <div class="c2-msg" data-side="right">いや……え、それが……あれ、そのきっかけはいつから？</div>
+        <div class="c2-msg" data-side="left">そのきっかけ？ そのきっかけはやっぱ前の会社、前の会社入った時からかな。</div>
+        <div class="c2-msg" data-side="right">いや、すご。そんなふうに思ってたとは。</div>
+        <div class="c2-msg" data-side="left">そうやで。だから俺が俺がやったら、みんなも「俺が俺が」になって、なんかみんながバラバラになるんよ、結局。</div>
+        <div class="c2-msg" data-side="right">そうですね、確かに。</div>
+        <div class="c2-msg" data-side="left">分かる？</div>
+        <div class="c2-msg" data-side="right">なんか、誰も育ってない、みたいな。</div>
+        <div class="c2-msg" data-side="left">そうそう。ミスしたら俺が全部ミスの責任取るって言ったら、みんなもね、怖がって仕事せんくなるやん。</div>
+        <div class="c2-msg" data-side="right">そっか。</div>
+        <div class="c2-msg" data-side="left">だから、ね、俺も昔はそうやったよ。俺が全部責任取るから、どんどん仕事やれって言ったけど。でもなんか、それもなんか違うなって途中で気づいた。
+</div>
+        <div class="c2-msg" data-side="right">なるほど。</div>
+        <div class="c2-msg" data-side="left">まあ、その、転機は転機やな。いろんな意味で。前の会社はめっちゃ転機やと思う。</div>
+        <div class="c2-msg" data-side="right">いや、確かに変わってると思います。話聞くと。</div>
+        
+      </section>　
+
+      <!-- 第二章 終了マーカー（必要なら） -->
+      <div class="corner-talk-end"></div>
+
+    </main>
+
+    <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="./functions.js"></script>

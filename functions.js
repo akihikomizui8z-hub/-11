@@ -1,28 +1,10 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// 出現
-function animateIn(el) {
-  gsap.to(el, {
-    opacity: 1,
-    y: 0,
-    duration: 0.6,
-    ease: "power2.out",
-    overwrite: "auto",
-  });
-}
+const body = document.body;
 
-// 退場（今回は「一度出たら消さない」運用なら使わなくてもOK）
-function animateOut(el) {
-  gsap.to(el, {
-    opacity: 0,
-    y: 24,
-    duration: 0.4,
-    ease: "power2.in",
-    overwrite: "auto",
-  });
-}
-
-// 本（表紙→開く）
+/* -------------------------
+  1) 本（表紙→開く）
+------------------------- */
 function setupBookMenu() {
   const wrap = document.querySelector(".book-wrap");
   if (!wrap) return;
@@ -32,78 +14,25 @@ function setupBookMenu() {
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: ".book-wrap",
+      trigger: wrap,
       start: "top top",
       end: "+=1200",
       scrub: true,
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-
-      // ピン区間が終わったら、本文側の位置を再計算
-      onLeave: () => ScrollTrigger.refresh(),
-      onLeaveBack: () => ScrollTrigger.refresh(),
     },
   })
     .to(".cover", { rotateY: -160, ease: "none" }, 0)
-    .to(
-      ".spread",
-      {
-        opacity: 1,
-        visibility: "visible",
-        pointerEvents: "auto",
-        duration: 0.2,
-        ease: "none",
-      },
-      0.2
-    );
+    .to(".spread", { opacity: 1, visibility: "visible", pointerEvents: "auto", ease: "none" }, 0.2);
 }
 
-// 本文（会話）reveal：安定版
-function setupScrollEffects() {
-  const elements = gsap.utils.toArray(".js-reveal");
-
-  elements.forEach((el) => {
-    // 初期状態をJSで固定（CSSだけに頼らない）
-    gsap.set(el, { opacity: 0, y: 24 });
-
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top 85%",
-      onEnter: () => animateIn(el),
-      onEnterBack: () => animateIn(el),
-
-      // 「一度出たら消さない」なら下2つは不要（安定）
-      // onLeave: () => animateOut(el),
-      // onLeaveBack: () => animateOut(el),
-
-      invalidateOnRefresh: true,
-    });
-  });
-}
-
-window.addEventListener("load", () => {
-  setupBookMenu();
-  setupScrollEffects();
-  setupChatReveal();     // ←追加
-  setupBackgroundFade();   // ← 追加
-  setupBackgroundRange();
-  setupDoorScene();
-  ScrollTrigger.refresh();
-
-
-
-  // フォント読み込み等でズレることがあるので二段refreshが安定
-  ScrollTrigger.refresh();
-  setTimeout(() => ScrollTrigger.refresh(), 100);
-
-  
-  
-
-});
-
+/* -------------------------
+  2) 第一章チャット：1通ずつフェードイン
+------------------------- */
 function setupChatReveal() {
   const msgs = gsap.utils.toArray(".chat .msg");
+  if (!msgs.length) return;
 
   msgs.forEach((el) => {
     gsap.set(el, { opacity: 0, y: 16 });
@@ -111,86 +40,45 @@ function setupChatReveal() {
     ScrollTrigger.create({
       trigger: el,
       start: "top 85%",
-      once: true, // 1回だけ出す（戻したら消える挙動にしたいなら外す）
+      once: true,
       onEnter: () => {
-        gsap.to(el, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        });
+        gsap.to(el, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
       },
     });
   });
 }
 
-function setupBackgroundRange(){
-  gsap.set(".bg-image", { opacity: 0 });
+/* -------------------------
+  3) 背景画像：bg-start〜bg-endの間だけ表示
+------------------------- */
+function setupBackgroundRange() {
+  const bg = document.querySelector(".bg-image");
+  if (!bg) return;
 
-  // 出す
+  gsap.set(bg, { opacity: 0 });
+
   ScrollTrigger.create({
     trigger: ".bg-start",
     start: "top 70%",
-    onEnter: () => gsap.to(".bg-image", { opacity: 1, duration: 0.8, ease: "power2.out" }),
-    onEnterBack: () => gsap.to(".bg-image", { opacity: 1, duration: 0.6, ease: "power2.out" }),
+    onEnter: () => gsap.to(bg, { opacity: 1, duration: 0.8, ease: "power2.out" }),
+    onEnterBack: () => gsap.to(bg, { opacity: 1, duration: 0.6, ease: "power2.out" }),
   });
 
-  // 終わらせる（消す）
   ScrollTrigger.create({
     trigger: ".bg-end",
     start: "top 70%",
-    onEnter: () => gsap.to(".bg-image", { opacity: 0, duration: 1.2, ease: "power1.out" }),
-    onEnterBack: () => gsap.to(".bg-image", { opacity: 1, duration: 0.6, ease: "power2.out" }), // 戻ったらまた出す
+    onEnter: () => gsap.to(bg, { opacity: 0, duration: 1.2, ease: "power1.out" }),
+    onEnterBack: () => gsap.to(bg, { opacity: 1, duration: 0.6, ease: "power2.out" }),
   });
 }
 
-window.addEventListener("load", () => {
-  gsap.set(".bg-image", { opacity: 0 });
-setupInteriorHarunobu();
-  // 背景を出す
-  ScrollTrigger.create({
-    trigger: ".bg-start",
-    start: "top 75%",
-    onEnter: () =>
-      gsap.to(".bg-image", {
-        opacity: 1,
-        duration: 1.0,
-        ease: "power2.out",
-      }),
-    onEnterBack: () =>
-      gsap.to(".bg-image", {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-      }),
-  });
-
-  // 背景を終わらせる
-  ScrollTrigger.create({
-    trigger: ".bg-end",
-    start: "top 75%",
-    onEnter: () =>
-      gsap.to(".bg-image", {
-        opacity: 0,
-        duration: 1.4,   // ← 余韻を残して消える
-        ease: "power1.out",
-      }),
-    onEnterBack: () =>
-      gsap.to(".bg-image", {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-      }),
-  });
-
-  ScrollTrigger.refresh();
-});
-
-window.addEventListener("load", () => {
+/* -------------------------
+  4) 背景GIF：gif-start〜gif-endの間だけ表示
+------------------------- */
+function setupBgGifRange() {
   const bgGif = document.querySelector(".bg-gif");
   const gifStart = document.querySelector(".gif-start");
   const gifEnd = document.querySelector(".gif-end");
-
   if (!bgGif || !gifStart || !gifEnd) return;
 
   gsap.set(bgGif, { autoAlpha: 0 });
@@ -207,104 +95,164 @@ window.addEventListener("load", () => {
         ease: "power2.out",
       });
     },
-    // markers: true, // 調整したい時だけON
   });
-});
+}
 
-gsap.registerPlugin(ScrollTrigger);
-
-window.addEventListener("load", () => {
-  setupDoorScene();
-  ScrollTrigger.refresh();
-});
-
-function setupDoorScene(){
+/* -------------------------
+  5) 扉 → 飛び込み → 店内背景に切り替え
+  - 下から出現 → pin+scrubで開く → 飛び込み → inside付与
+------------------------- */
+function setupDoorScene() {
   const wrap = document.querySelector(".door-wrap");
-  const trigger = document.querySelector(".door-trigger");
-  if(!wrap) return;
+  if (!wrap) return;
 
-  const scene    = wrap.querySelector(".door-scene");
-  const door     = wrap.querySelector(".door");
+  const scene = wrap.querySelector(".door-scene");
+  const door = wrap.querySelector(".door");
   const interior = wrap.querySelector(".interior");
-  const veil     = wrap.querySelector(".veil");
+  const veil = wrap.querySelector(".veil");
+  const interiorBg = document.querySelector(".interior-bg"); // 画面全体の店内背景
 
-  if(!scene || !door || !interior) return;
+  if (!scene || !door || !interior || !interiorBg) return;
 
-  // 初期状態（CSSだけに頼らずJSで固定）
-  gsap.set(".interior-bg", { opacity: 0 });
-  gsap.set(".door-scene", { scale: 1, autoAlpha: 1, transformOrigin: "50% 50%" });
-  gsap.set(scene,    { opacity: 0, y: 180 });
+  const trigger = document.querySelector(".door-trigger") || wrap;
+
+  // 初期状態
+  gsap.set(scene, { autoAlpha: 0, y: 180, transformOrigin: "50% 50%", scale: 1 });
+  gsap.set(door, { rotateY: 0, transformOrigin: "left center", opacity: 1 });
   gsap.set(interior, { opacity: 0, scale: 1.12, transformOrigin: "50% 50%" });
-  gsap.set(veil,     { opacity: 0.25 });
-  gsap.set(door,     { rotateY: 0, transformOrigin: "left center", opacity: 1 });
+  if (veil) gsap.set(veil, { opacity: 0.25 });
+  gsap.set(interiorBg, { opacity: 0 });
 
-  // ① 下から出る（scrubじゃなく再生）
+  // 下から出現（1回だけ）
   ScrollTrigger.create({
     trigger: wrap,
     start: "top 95%",
+    once: true,
     onEnter: () => {
-      gsap.to(scene, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
+      gsap.to(scene, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out", overwrite: "auto" });
     },
-
-    // markers: true,
   });
 
-  // ② その後スクロールで「開く」（pin+scrub）
+  // 開く＋飛び込み（pin+scrub）
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: trigger,
-      start: "top 10%",   // ★ここを変えると「開き始める位置」が変わる
+      start: "top 20%",  // ←開き始めの位置（遅くしたいなら 30%/40%）
       end: "+=1600",
       scrub: true,
       pin: wrap,
       anticipatePin: 1,
-      // markers: true,
-    }
+      invalidateOnRefresh: true,
+      onLeaveBack: () => body.classList.remove("inside"),
+    },
   });
 
-  tl.to(interior, { opacity: 1, scale: 1.0, ease: "none" }, 0.05)
-    .to(door,     { rotateY: -115, ease: "none" }, 0.15)  // ★開く
-    .to(veil,     { opacity: 0.0, ease: "none" }, 0.60)
-    .to(door,     { opacity: 0, ease: "none" }, 0.85);
-    // 飛び込み（シーン消える + 背景ON）
-    tl.call(() => document.body.classList.add("inside"), null, 0.80);
-tl.call(() => document.body.classList.remove("inside"), null, 0.05);
-  tl.to(".door-scene",   { scale: 1.25, autoAlpha: 0, ease: "none" }, 0.80)
-    .to(".interior-bg",  { opacity: 1, ease: "none" },              0.80)
-    
+  tl.to(interior, { opacity: 1, scale: 1.0, ease: "none" }, 0.05);
+  tl.to(door, { rotateY: -115, ease: "none" }, 0.15);
+  if (veil) tl.to(veil, { opacity: 0.0, ease: "none" }, 0.60);
 
-    
+  // 飛び込み開始（ここから inside ON）
+  tl.add(() => body.classList.add("inside"), 0.78);
 
-  // ★これを追加：door側の店内を後で消して残骸を防ぐ
-    .to(".inside",     { opacity: 0, ease: "none" },              0.82);
-
+  tl.to(scene, { scale: 1.25, autoAlpha: 0, ease: "none" }, 0.78);
+  tl.to(interiorBg, { opacity: 1, ease: "none" }, 0.78);
+  tl.to(door, { opacity: 0, ease: "none" }, 0.80);
 }
 
-function setupInteriorHarunobu(){
+/* -------------------------
+  6) 店内に入ったら harunobu 出す（CSS inside運用の補助）
+------------------------- */
+function setupInteriorHarunobu() {
   const img = document.querySelector(".interior-harunobu");
-  const body = document.body;
+  if (!img) return;
 
-  if(!img) return;
-
-  gsap.set(img, { x: 0, y: 0, autoAlpha: 0 }); // 念のため初期化
+  gsap.set(img, { autoAlpha: 0 });
 
   ScrollTrigger.create({
     trigger: ".door-wrap",
     start: "top top",
-    end: "+=1600",     // 扉演出と同じendに合わせる
+    end: "+=1600",
     scrub: true,
-
-    onUpdate: (self) => {
-      if (self.progress > 0.60) body.classList.add("inside");  // ここで出る
-      else body.classList.remove("inside");                    // 戻ったら消す
-    }
+    onUpdate: () => {
+      gsap.to(img, {
+        autoAlpha: body.classList.contains("inside") ? 1 : 0,
+        duration: 0.2,
+        overwrite: "auto",
+      });
+    },
   });
-  
 }
 
+/* -------------------------
+  7) 第二章：固定吹き出し（左下＆右下）をスクロールで差し替え
+  - 第二章に入るまで corner-ui を表示しない
+  - c2-msg は「トリガー用」（表示させないのはCSS側）
+------------------------- */
+function setupCornerChatChapter2() {
+  const ui = document.querySelector(".corner-ui");
+  const bubbleLeft = document.getElementById("bubbleLeft");
+  const bubbleRight = document.getElementById("bubbleRight");
+  const startAnchor = document.querySelector("#interview-start201");
+  const msgs = gsap.utils.toArray(".chat-chapter2 .c2-msg");
+
+  if (!ui || !bubbleLeft || !bubbleRight || !startAnchor || msgs.length === 0) return;
+
+  // 第二章に入るまでUIを隠す
+  gsap.set(ui, { autoAlpha: 0 });
+
+  ScrollTrigger.create({
+    trigger: startAnchor,
+    start: "top 70%",
+    onEnter: () => gsap.to(ui, { autoAlpha: 1, duration: 0.25, overwrite: "auto" }),
+    onEnterBack: () => gsap.to(ui, { autoAlpha: 1, duration: 0.25, overwrite: "auto" }),
+    onLeaveBack: () => gsap.to(ui, { autoAlpha: 0, duration: 0.2, overwrite: "auto" }),
+  });
+
+  const show = (side, text) => {
+    const target = side === "left" ? bubbleLeft : bubbleRight;
+    target.textContent = text;
+
+    gsap.fromTo(
+      target,
+      { autoAlpha: 0, y: 10, scale: 0.98 },
+      { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out", overwrite: "auto" }
+    );
+  };
+
+  // 各メッセージをスクロールで発火
+  msgs.forEach((el) => {
+  const sideRaw = (el.dataset.side || "left");
+  const side = sideRaw.trim().toLowerCase();  // ★trim()が重要
+  const text = el.textContent.trim();
+
+  ScrollTrigger.create({
+    trigger: el,
+    start: "top 60%",
+    onEnter: () => show(side === "left" ? "left" : "right", text),
+    onEnterBack: () => show(side === "left" ? "left" : "right", text),
+  });
+});
+
+
+  // 初期表示（第二章に入った瞬間に空を防ぐ）
+  const first = msgs[0];
+  if (first) {
+    show((first.dataset.side || "left").toLowerCase(), first.textContent.trim());
+  }
+}
+
+/* -------------------------
+  起動（loadは1回だけ）
+------------------------- */
+window.addEventListener("load", () => {
+  setupBookMenu();
+  setupChatReveal();
+  setupBackgroundRange();
+  setupBgGifRange();
+  setupDoorScene();
+  setupInteriorHarunobu();
+  setupCornerChatChapter2();
+
+  ScrollTrigger.refresh();
+  setTimeout(() => ScrollTrigger.refresh(), 100);
+});

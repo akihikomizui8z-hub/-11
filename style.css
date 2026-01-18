@@ -1,180 +1,85 @@
-* {
-  box-sizing: border-box;
-}
-html,
-body {
-  height: 100%;
-}
+/* =========================
+   Base / Reset
+========================= */
+* { box-sizing: border-box; }
 
-body {
+html, body { height: 100%; }
+
+html { scroll-behavior: smooth; }
+
+body{
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto,
     "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
-  font-size:16px;
+  font-size: 16px;
   background: #f7f7fa;
   color: #2b2f36;
   line-height: 1.9;
 }
 
-.container {
+.container{
   width: min(1024px, 92%);
   margin: 0 auto;
   padding: 24px 0 120px;
 }
 
-.intro {
+main.container{
+  position: relative;
+  z-index: 2; /* 背景より前に */
+}
+
+.intro{
   padding: 48px 0 80px;
   color: #6b7280;
 }
 
-.interview {
+.interview{
   opacity: 0;
   transform: translateY(24px);
   background: #ffffff;
   border: 1px solid #e8eaf0;
   border-radius: 12px;
-  padding: 20px 20px;
+  padding: 20px;
   margin: 48px 0;
 }
 
-.speaker {
+.speaker{
   font-weight: 700;
   color: #4f6d8a;
   margin: 0 0 4px;
 }
 
-.line {
-  margin: 0 0 8px;
-}
+.line{ margin: 0 0 8px; }
 
-.site-footer {
+.site-footer{
   margin-top: 120px;
   color: #6b7280;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .interview {
-    opacity: 1 !important;
-    transform: none !important;
-  }
+@media (prefers-reduced-motion: reduce){
+  .interview{ opacity: 1 !important; transform: none !important; }
 }
 
-/* ====== Book Menu ====== */
-.book-wrap {
+/* =========================
+   Book Menu
+========================= */
+.book-wrap{
   height: 200vh;
-  padding: 8px 0;   /* 24px → 8px */
+  padding: 8px 0;
 }
 
-
-.book {
+.book{
   position: relative;
-
-  /* ここがポイント：縦横比を固定 */
-  aspect-ratio: 3 / 4;          /* ←画像の比率に合わせて調整（後述） */
-
-  /* 画面いっぱいに寄せる：高さ基準で大きくする */
-  height: min(86vh, 760px);     /* ← “画面いっぱい感”の主役 */
+  aspect-ratio: 3 / 4;
+  height: min(86vh, 760px);
   width: auto;
-
   margin: 0 auto;
   perspective: 1400px;
   display: grid;
-  place-items: center;  /* ← 真ん中寄せ */
-
+  place-items: center;
 }
 
-
-/* 開いた見開き */
-.spread {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-
-  opacity: 0;              /* ← 最初は見せない */
-  visibility: hidden;
-  pointer-events: none;    /* ← 最初はクリックも無効 */
-  
-}
-/* 見開きだけ横幅を広げる */
-.spread {
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(1100px, 96vw);   /* ← ここで見開きの横幅を指定 */
-  height: 100%;               /* bookの高さに合わせる */
-}
-
-/* 2ページの比率を調整（必要なら） */
-.spread {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;                  /* 真ん中の溝も広く */
-}
-
-
-.page {
-  background-image: url("./hawai1.png");
-  background-size: cover;        /* ページ全面に敷く */
-  background-position: center;
-  background-repeat: no-repeat;
-
-  background: transparent;
-  box-shadow: none; /* 必要なら残してもOK */
-
-  border-radius: 16px;
-  padding: 28px 26px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
-.spread {
-  background-image: url("./hawai1.png"); /* ← 2ページ分の画像 */
-  background-size: cover;               /* 画面いっぱいに */
-  background-position: center;
-  background-repeat: no-repeat;
-
-  border-radius: 16px;   /* ページの角丸を見開き全体に */
-  overflow: hidden;      /* 角丸からはみ出さない */
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08); /* 影も見開きに */
-}
-.spread {
-  height: 100%;
-  min-height: 720px; /* ← ここを足す */
-}
-
-.spread::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  background: rgba(0,0,0,0.08);
-  transform: translateX(-1px);
-  pointer-events: none;
-}
-
-
-
-.page h2:not(.chapter-title){
-  margin: 0 0 10px;
-  font-size: 18px;
-  opacity: 0.9;
-}
-
-
-.menu-item {
-  display: block;
-  padding: 10px 0;
-  color: #2b2f36;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
-}
-.menu-item:hover {
-  opacity: 0.75;
-}
-
-/* 表紙 */
-.cover {
+.cover{
   position: absolute;
   inset: 0;
   border-radius: 18px;
@@ -183,42 +88,94 @@ body {
   z-index: 5;
 
   background-image: url("./hyosi.png");
-  background-size: cover;        /* 枠いっぱいに表示 */
-  background-position: center;   /* 中央トリミング */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 
   box-shadow: 0 16px 40px rgba(0,0,0,0.15);
-
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Safari対策 */
+  -webkit-backface-visibility: hidden;
 }
 
-
-.cover-inner {
-  background: rgba(0,0,0,0.25); /* うっすら暗く */
-}
-
-.cover-title {
+.cover-inner{ background: rgba(0,0,0,0.25); }
+.cover-title{
   color: #fff;
   text-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
+/* 見開き */
+.spread{
+  position: absolute;
+  inset: 0;
 
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 96vw);
+  height: 100%;
+  min-height: 720px;
 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
 
-/* できれば本文（インタビュー）に飛ぶ時に気持ち良く */
-html {
-  scroll-behavior: smooth;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  background-image: url("./hawai1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-.chapter-title {
+.spread::after{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: rgba(0,0,0,0.08);
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+
+.page{
+  background: transparent;
+  border-radius: 16px;
+  padding: 28px 26px;
+}
+
+.page h2:not(.chapter-title){
+  margin: 0 0 10px;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.menu-item{
+  display: block;
+  padding: 10px 0;
+  color: #2b2f36;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.menu-item:hover{ opacity: 0.75; }
+
+/* =========================
+   Typography (chapter)
+========================= */
+.chapter-title{
   font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
   font-size: clamp(20px, 2.2vw, 28px);
   font-weight: 600;
   letter-spacing: 0.08em;
   margin-bottom: 12px;
 }
-.chapter-text {
+
+.chapter-text{
   font-family: "Noto Sans JP", system-ui, sans-serif;
   font-size: clamp(14px, 1.6vw, 17px);
   line-height: 1.8;
@@ -226,9 +183,7 @@ html {
   margin-bottom: 24px;
 }
 
-/* ===== 章の見た目（最優先で勝たせる） ===== */
 .page .chapter-title{
-  font-family: "Noto Serif JP","Hiragino Mincho ProN",serif;
   font-size: clamp(24px, 2.6vw, 34px);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -236,23 +191,24 @@ html {
 }
 
 .page .chapter-text{
-  font-family: "Noto Sans JP", system-ui, sans-serif;
   font-size: clamp(16px, 1.8vw, 20px);
   line-height: 1.9;
   margin: 0 0 28px;
 }
 
-.fixed-logo {
+/* =========================
+   Fixed Logo (optional)
+========================= */
+.fixed-logo{
   position: fixed;
   top: 16px;
   left: 16px;
-
-  width: 140px;        /* 好きなサイズに調整 */
+  width: 140px;
   height: auto;
 
-  z-index: -1;          /* ← 最背面 */
-  pointer-events: none; /* ← クリック完全無効 */
-  opacity: 0.3;        /* ← 背景感を出したいなら（任意） */
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.3;
 
   background: rgba(255,255,255,1);
   backdrop-filter: blur(6px);
@@ -260,13 +216,17 @@ html {
   border-radius: 8px;
 }
 
-/* ===== Hero Intro ===== */
+/* =========================
+   Hero
+========================= */
 .hero{
   min-height: 80vh;
   display: grid;
   align-content: center;
   gap: 14px;
   padding: 40px 0 80px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-kicker{
@@ -314,7 +274,6 @@ html {
 }
 .hero-cta:hover{ opacity: .85; }
 
-.hero{ position: relative; overflow: hidden; }
 .hero-gif{
   position: absolute;
   right: -40px;
@@ -328,89 +287,72 @@ html {
 
 .hero-gif1{
   position: absolute;
-
-  right: 470px;   /* ← 右に出す量（数値で調整） */
-  bottom: -30px;   /* ← 少し下にずらすと自然 */
-
-  width: 140px;    /* サイズはここで */
+  right: 470px;
+  bottom: -30px;
+  width: 140px;
   opacity: .9;
-
   pointer-events: none;
   filter: drop-shadow(0 12px 24px rgba(0,0,0,.2));
 }
 
-
 @media (max-width: 768px){
-  .hero-gif{ display:none; } /* スマホは邪魔になりやすいので消す */
-}
-
-.hero{
-  position: relative;
-  overflow: hidden;
+  .hero-gif{ display: none; }
 }
 
 .hero-image-bottom{
   position: absolute;
-  right: -20px;        /* GIFと揃えたいなら同じ基準 */
-  bottom: -20px;      /* 少しはみ出させるとデザイン感UP */
+  right: -20px;
+  bottom: -20px;
   width: min(280px, 32vw);
   opacity: 0.9;
   pointer-events: none;
 }
 .hero-image-bottom1{
   position: absolute;
-  right:500px;        /* GIFと揃えたいなら同じ基準 */
-  bottom: 0px;      /* 少しはみ出させるとデザイン感UP */
+  right: 500px;
+  bottom: 0px;
   width: min(80px, 32vw);
   opacity: 0.9;
   pointer-events: none;
 }
 
 .read-btn{
-  display: inline-flex;      /* ← ここがポイント */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  padding: 10px 18px;        /* ← 横を詰める */
   border-radius: 999px;
-
   border: 1px solid #d1d5db;
   text-decoration: none;
   color: #2b2f36;
   font-size: 14px;
   letter-spacing: 0.1em;
 
-  width: 140px;      /* ← 好きな長さに調整 */
-  padding: 10px 0;   /* ← 横paddingを殺すのがコツ */
+  width: 140px;
+  padding: 10px 0;
   text-align: center;
 }
 
-/* ===== LINE風チャット ===== */
+/* =========================
+   Chapter Head spacing
+========================= */
+.chapter-head{
+  margin-top: 300px;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   Chat (Chapter 1 normal)
+========================= */
+.chat{
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
 .msg{
   opacity: 0;
   transform: translateY(16px);
-}
 
-.chat{
-  width: min(900px, 92%);
-  margin: 0 auto;
-  padding: 28px 0 80px;
-}
-.chat {
-  max-width: 720px;   /* ← ここが効く */
-  margin: 0 auto;     /* 画面中央に寄せる */
-  padding: 0 16px;
-}
-.chat {
-  max-width: 720px;   /* 好きな幅でOK */
-  margin: 40px auto;  /* 画面中央に */
-  padding: 0 16px;
-}
-
-
-
-
-.msg{
   display: flex;
   flex-direction: column;
   max-width: 72%;
@@ -418,15 +360,7 @@ html {
 }
 
 .msg.left{ align-items: flex-start; }
-.msg.right{
-  align-items: flex-end;
-  margin-left: auto;
-}
-.bubble {
-  max-width: 65%;
-}
-
-
+.msg.right{ align-items: flex-end; margin-left: auto; }
 
 .msg .name{
   font-size: 12px;
@@ -441,24 +375,16 @@ html {
   line-height: 1.75;
   box-shadow: 0 10px 22px rgba(0,0,0,0.06);
   border: 1px solid rgba(0,0,0,0.06);
-  white-space: pre-wrap; /* 改行を維持 */
+  white-space: pre-wrap;
+  max-width: 65%;
 }
 
-/* 左（質問者） */
+/* 左 */
 .msg.left .bubble{
   background: #ffffff;
   color: #111827;
   border-top-left-radius: 6px;
 }
-
-/* 右（相手） */
-.msg.right .bubble{
-  background: #2ecc71; /* LINEっぽい緑 */
-  color: #0b1b12;
-  border-top-right-radius: 6px;
-}
-
-/* “しっぽ” */
 .msg.left .bubble::after{
   content:"";
   position:absolute;
@@ -472,6 +398,12 @@ html {
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
+/* 右 */
+.msg.right .bubble{
+  background: #2ecc71;
+  color: #0b1b12;
+  border-top-right-radius: 6px;
+}
 .msg.right .bubble::after{
   content:"";
   position:absolute;
@@ -485,38 +417,29 @@ html {
   border-top: 1px solid rgba(0,0,0,0.06);
 }
 
-.chapter-head{
-  margin-top: 300px;   /* ← ここで間を空ける */
-  margin-bottom: 24px;
-}
-
+/* =========================
+   Backgrounds (sea + gif)
+========================= */
 .bg-image{
   position: fixed;
   inset: 0;
-  background-image: url("./hawai2.jpg"); /* ← 出したい背景 */
+  background-image: url("./hawai2.jpg");
   background-size: cover;
   background-position: center;
 
-  opacity: 0;                 /* ← 最初は非表示 */
+  opacity: 0;
   pointer-events: none;
-  z-index: 0;                /* ← 背景なので最背面 */
+  z-index: 0;
   transition: opacity 0.6s ease;
-  
+
   filter: blur(15px) brightness(1.4) saturate(.95);
-  transform: scale(0.8); /* ぼかしの端の白フチ対策 */
-}
-
-
-main.container{
-  position: relative;
-  z-index: 1;
+  transform: scale(0.8);
 }
 
 .bg-gif{
   position: fixed;
-  right: 300px;     /* 右にずらす */
-  bottom: -40px;    /* 下にずらす */
-
+  right: 300px;
+  bottom: -40px;
   width: 420px;
   height: 420px;
 
@@ -527,178 +450,23 @@ main.container{
 
   opacity: 0;
   pointer-events: none;
-  z-index: 0;
-}
-
-
-.bg-gif { opacity: 0; }
-.bg-gif.is-on { opacity: 1; }
-.bg-image, .bg-gif { z-index: 1; }  /* or 0 */
-
-
-/* スクロール量を作る（ここを増やすと演出が長くなる） */
-.door-wrap{
-  height: 220vh;
-  padding: 0;
-}
-
-/* ピン留めされる舞台 */
-.door-scene{
-  position: relative;
-  width: min(1100px, 92vw);
-  height: min(680px, 82vh);
-  margin: 0 auto;
-
-  perspective: 1600px;
-  transform-style: preserve-3d;
-  border-radius: 18px;
-  overflow: hidden;
-
-  box-shadow: 0 18px 50px rgba(0,0,0,0.15);
-}
-
-/* 店内（奥の背景） */
-.interior{
-  position: absolute;
-  inset: 0;
-  background-image: url("./.png"); /* ←店内画像 */
-  background-size: cover;
-  background-position: center;
-
-  opacity: 0; /* 最初は見せない */
-  transform: scale(1.03); /* 少し奥行き感 */
-}
-
-/* 扉（手前） */
-.door{
-  position: absolute;
-  inset: 0;
-  background-image: url("./tobira2.png"); /* ←扉画像 */
-  background-size: cover;
-  background-position: center;
-
-  transform-origin: left center; /* 左が蝶番 */
-  transform: rotateY(0deg);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* 薄い暗幕（任意） */
-.veil{
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.25);
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-.interior{ background-image: url("tennai.png"); }
-.door{ background-image: url("tobira2.png"); }
-
-.door-scene{
-  position: relative;
-  width: 20vw;
-  height: 80vh;
-  margin: 0;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: hidden;
-}
-
-/* ===== Door transition（ここだけは1回だけ定義） ===== */
-.door-wrap{
-  height: 220vh;          /* 演出の長さ */
-}
-
-/* ピンされる“舞台”は画面いっぱい */
-.door-scene{
-  position: relative;
-  width: 100%;
-  height: 10vh;
-  margin: 0;
-
-  perspective: 1600px;
-  transform-style: preserve-3d;
-
-  overflow: hidden;
-  border-radius: 0;       /* 全画面にしたいので角丸なし */
-  box-shadow: none;
-}
-
-/* 店内（背景）＝最初から画面全体に敷く */
-.interior{
-  position: absolute;
-  inset: 0;
-  background-image: url("./tennai.png");   /* ←これだけにする */
-  background-size: cover;
-  background-position: center top;
-
-  opacity: 0;             /* 最初は薄く（後で出す） */
-  transform: scale(1.12); /* “飛び込む”用に最初は少し拡大 */
-}
-
-/* 扉＝細長い板（左側に固定） */
-.door{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: min(320px, 26vw);           /* 細長い扉 */
-  background-image: url("./tobira.png");
-  background-size: cover;
-  background-position: center;
-
-  transform-origin: left center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-
-  z-index: 3;
-}
-
-/* 暗幕（雰囲気） */
-.veil{
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.25);
-  opacity: 0.0;
-  pointer-events: none;
   z-index: 1;
 }
 
-/* “入店後”は以降ずっと店内背景にしたい場合 */
-body.in-interior .bg-image{
-  opacity: 1;
-  background-image: url("./tennai.png");
-  filter: none;
-  transform: none;
-}
-
-/* 全画面の店内背景（最初は透明） */
-.interior-bg{
-  position: fixed;
-  inset: 0;
-  background-image: url("./tennai.png");
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 0;              /* 背景レイヤー */
-  transition: opacity .4s ease;
-}
-
-/* mainは背景より手前に */
-main.container{ position: relative; z-index: 2; }
-
-/* 演出区間：スクロール長さ */
+/* =========================
+   Door Scene (one clean definition)
+========================= */
 .door-wrap{
   height: 240vh;
   margin: 0;
+  padding: 0;
 }
 
-/* ピン留めされる舞台（中央） */
+.door-trigger{ height: 1px; }
+
 .door-scene{
   position: relative;
-  width: min(300px, 70vw);     /* 舞台自体は細め */
+  width: min(300px, 70vw);
   height: min(850px, 100vh);
   margin: 0 auto;
   border-radius: 22px;
@@ -709,24 +477,26 @@ main.container{ position: relative; z-index: 2; }
 
   box-shadow: 0 18px 50px rgba(0,0,0,.15);
   background: transparent;
+
+  opacity: 0;
+  transform: translateY(180px);
+  will-change: transform, opacity;
 }
 
-/* 店内（舞台の奥） */
 .door-scene .interior{
   position: absolute;
   inset: 0;
   background-image: url("./tennai.png");
   background-size: cover;
   background-position: center;
-  opacity: 1;                /* 舞台内では最初から存在してOK */
+  opacity: 1;
   transform: scale(1.02);
 }
 
-/* 扉（舞台の手前）：細長くしたいので幅を指定 */
 .door-scene .door{
   position: absolute;
   top: 0; left: 0; bottom: 0;
-  width: 100%;                /* ← 扉の細さ（ここ調整） */
+  width: 100%;
   background-image: url("./tobira.png");
   background-size: cover;
   background-position: center;
@@ -737,17 +507,6 @@ main.container{ position: relative; z-index: 2; }
   will-change: transform;
 }
 
-/* 右側の“隙間”の背景（舞台内で見える店内） */
-.door-scene::after{
-  content:"";
-  position:absolute;
-  top:0; right:0; bottom:0;
-  width: 20%;
-  background: rgba(0,0,0,0.0);
-  pointer-events:none;
-}
-
-/* 雰囲気用の薄いフィルム（任意） */
 .door-scene .veil{
   position: absolute;
   inset: 0;
@@ -756,8 +515,8 @@ main.container{ position: relative; z-index: 2; }
   opacity: .25;
 }
 
-/* 店内背景（最初は透明） */
-.bg-interior{
+/* 店内の全画面背景（飛び込み後） */
+.interior-bg{
   position: fixed;
   inset: 0;
   background-image: url("./tennai.png");
@@ -765,64 +524,163 @@ main.container{ position: relative; z-index: 2; }
   background-position: center;
   opacity: 0;
   pointer-events: none;
-  z-index: 0;                 /* 背景レイヤー */
-  transition: opacity .8s ease;
-}
-
-/* 店内に入ったら店内背景を表示 */
-body.inside .bg-interior{
-  opacity: 1;
-}
-
-/* 既存の背景（海）を消したいなら */
-body.inside .bg-image{
-  opacity: 0;
-}
-
-.door-scene { opacity: 0; }
-
-.door-trigger{
-  height: 1px;
-}
-.door-scene{
-  opacity: 0;
-  transform: translateY(180px);
-  will-change: transform, opacity;
-}
-
-.interior-bg{
-  position: fixed;
-  inset: 0;
-  background-image: url("./tennai.png"); /* 店内画像 */
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  pointer-events: none;
   z-index: 0;
 }
 
-/* 文字やチャットが背景の上に来るように */
-main.container{
-  position: relative;
-  z-index: 2;
-}
+/* 店内に入ったら海背景を消して、店内背景を出す */
+body.inside .bg-image{ opacity: 0; }
+body.inside .interior-bg{ opacity: 1; }
 
-/* 最初は左の画面外に隠す */
+/* harunobu（店内入ったら出す） */
 .interior-harunobu{
   position: fixed;
-  left: -320px;          /* 画面外 */
+  left: -320px;
   bottom: 20px;
-  width: 240px;
+  width: 400px;
   opacity: 0;
-  transform: translateX(0);
-  transition: left .8s ease, opacity .6s ease;
-  z-index: 9999;         /* これで上に来る */
   pointer-events: none;
+
+  z-index: 50;
   filter: drop-shadow(0 18px 40px rgba(0,0,0,.25));
+
+  transition:
+    left .8s cubic-bezier(.22,.61,.36,1),
+    opacity .6s ease;
+}
+body.inside .interior-harunobu{
+  left: 30px;
+  opacity: 1;
 }
 
-/* 店内に入ったら出す */
-body.inside .interior-harunobu{
-  left: 30px;            /* 画面内 */
+/* =========================
+   Chapter 1: Corner Talk (optional)
+   ※第一章で使ってるならここが効く
+========================= */
+.corner-talk{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* 左下（harunobu） */
+.corner-left{
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  display: grid;
+  gap: 10px;
+  align-items: end;
+}
+
+.corner-harunobu{
+  width: 120px;
+  height: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  filter: drop-shadow(0 14px 30px rgba(0,0,0,.25));
+}
+
+/* 右下（相手の吹き出しだけ） */
+.corner-right{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+}
+
+/* 第一章用の吹き出し（名前を分離！） */
+.corner-talk-bubble{
+  max-width: min(48vw, 420px);
+  background: rgba(255,255,255,.95);
+  border-radius: 14px;
+  padding: 12px 14px;
+  line-height: 1.7;
+  font-size: 14px;
+  color: #111;
+  box-shadow: 0 12px 26px rgba(0,0,0,.12);
+
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.corner-talk-bubble.left{ border-left: 3px solid rgba(0,0,0,.08); }
+.corner-talk-bubble.right{
+  border-right: 3px solid rgba(0,0,0,.08);
+  text-align: left;
+}
+
+/* =========================
+   Chapter 2: Corner UI (2 bubbles fixed)
+   ※第二章だけ。第一章に影響しない
+========================= */
+.chat.chat-chapter2{
+  display: block;   /* display:none禁止 */
+  width: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.chat.chat-chapter2 .c2-msg{
+  opacity: 0;
+  pointer-events: none;
+  height: 75vh; /* メッセージ間隔 */
+}
+
+.corner-ui{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+.corner-ui.is-on{
   opacity: 1;
+  visibility: visible;
+}
+
+/* ★第二章の吹き出しは corner-ui の中だけ */
+.corner-ui .corner-bubble{
+  position: absolute;
+  max-width: min(520px, 44vw);
+  padding: 16px 18px;
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  backdrop-filter: blur(6px);
+
+  color: #111;
+  line-height: 1.75;
+  font-size: 15px;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.corner-ui .corner-bubble.is-on{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 左：harunobuが話してる位置へ（右上に寄せる） */
+.corner-ui .corner-bubble--left{
+  left: 480px;   /* harunobuがデカいなら増やす */
+  bottom: 350px; /* 上げたいなら増やす */
+  max-width: min(460px, 44vw);
+  font-size: 25px;
+  text-align: left;
+}
+
+/* 右：少し大きめ */
+.corner-ui .corner-bubble--right{
+  right: 28px;
+  bottom: 70px;
+  max-width: min(560px, 48vw);
+  padding: 18px 22px;
+  font-size: 16px;
+  text-align: left;
 }
